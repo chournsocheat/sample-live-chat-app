@@ -10,7 +10,8 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"server.ts\"",
-    "test": "vitest run"
+    "test": "vitest run",
+    "start": "tsx server.ts"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
@@ -26,7 +27,8 @@
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
     "uuid": "^13.0.0",
-    "vite": "^6.2.0"
+    "vite": "^6.2.0",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
