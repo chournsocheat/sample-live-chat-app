@@ -69,7 +69,7 @@ export default function App() {
         setName(serverName);
         setMessages(messages);
         setOnlineUsers(users);
-        
+
         // Save to local storage
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: serverId, name: serverName }));
       });
@@ -81,7 +81,7 @@ export default function App() {
       newSocket.on("status_update", ({ user, status, message }) => {
         if (status === "connected") {
           setOnlineUsers((prev) => {
-            if (prev.find(u => u.id === user.id)) return prev;
+            if (prev.find((u) => u.id === user.id)) return prev;
             return [...prev, user];
           });
         } else {
@@ -138,7 +138,7 @@ export default function App() {
   if (!isJoined) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 font-sans text-white">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md bg-[#141414] border border-white/10 rounded-2xl p-8 shadow-2xl"
@@ -152,13 +152,13 @@ export default function App() {
           </div>
 
           <div className="flex bg-white/5 p-1 rounded-xl mb-6">
-            <button 
+            <button
               onClick={() => setJoinMode("new")}
               className={`flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${joinMode === "new" ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white/60"}`}
             >
               New User
             </button>
-            <button 
+            <button
               onClick={() => setJoinMode("id")}
               className={`flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${joinMode === "id" ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white/60"}`}
             >
@@ -233,12 +233,12 @@ export default function App() {
             </div>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-3 px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
             <div className="flex flex-col items-end">
               <span className="text-xs font-bold">{name}</span>
-              <button 
+              <button
                 onClick={copyId}
                 className="text-[9px] text-white/40 hover:text-emerald-500 flex items-center gap-1 transition-colors"
                 title="Click to copy ID"
@@ -251,7 +251,7 @@ export default function App() {
               <User className="w-4 h-4 text-emerald-500" />
             </div>
           </div>
-          <button 
+          <button
             onClick={handleLogout}
             className="p-2 hover:bg-white/5 rounded-lg transition-colors text-white/60 hover:text-white"
             title="Logout"
@@ -269,29 +269,39 @@ export default function App() {
               {messages.map((msg) => (
                 <motion.div
                   key={msg.id}
-                  initial={{ opacity: 0, x: msg.type === 'status' ? 0 : (msg.userId === userId ? 10 : -10) }}
+                  initial={{
+                    opacity: 0,
+                    x: msg.type === "status" ? 0 : msg.userId === userId ? 10 : -10,
+                  }}
                   animate={{ opacity: 1, x: 0 }}
-                  className={`flex ${msg.type === 'status' ? 'justify-center' : (msg.userId === userId ? 'justify-end' : 'justify-start')}`}
+                  className={`flex ${msg.type === "status" ? "justify-center" : msg.userId === userId ? "justify-end" : "justify-start"}`}
                 >
-                  {msg.type === 'status' ? (
+                  {msg.type === "status" ? (
                     <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/20 bg-white/5 px-3 py-1 rounded-full border border-white/5">
                       {msg.content}
                     </span>
                   ) : (
-                    <div className={`max-w-[80%] sm:max-w-[60%] ${msg.userId === userId ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+                    <div
+                      className={`max-w-[80%] sm:max-w-[60%] ${msg.userId === userId ? "items-end" : "items-start"} flex flex-col gap-1`}
+                    >
                       <div className="flex items-center gap-2 px-1">
                         <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
-                          {msg.userId === userId ? 'You' : msg.userName}
+                          {msg.userId === userId ? "You" : msg.userName}
                         </span>
                         <span className="text-[10px] text-white/20">
-                          {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          {new Date(msg.timestamp).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </span>
                       </div>
-                      <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
-                        msg.userId === userId 
-                          ? 'bg-emerald-500 text-black font-medium rounded-tr-none shadow-lg shadow-emerald-500/10' 
-                          : 'bg-[#1a1a1a] text-white border border-white/10 rounded-tl-none'
-                      }`}>
+                      <div
+                        className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                          msg.userId === userId
+                            ? "bg-emerald-500 text-black font-medium rounded-tr-none shadow-lg shadow-emerald-500/10"
+                            : "bg-[#1a1a1a] text-white border border-white/10 rounded-tl-none"
+                        }`}
+                      >
                         {msg.content}
                       </div>
                     </div>
@@ -304,10 +314,7 @@ export default function App() {
 
           {/* Input Area */}
           <div className="p-6 bg-[#0a0a0a]">
-            <form 
-              onSubmit={handleSendMessage}
-              className="relative flex items-center"
-            >
+            <form onSubmit={handleSendMessage} className="relative flex items-center">
               <input
                 type="text"
                 value={input}
@@ -331,12 +338,14 @@ export default function App() {
           <div className="p-6 border-b border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <Users className="w-4 h-4 text-emerald-500" />
-              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60">Online Now</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/60">
+                Online Now
+              </h3>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-1">
             {onlineUsers.map((u) => (
-              <div 
+              <div
                 key={u.id}
                 className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-colors group"
               >
@@ -349,26 +358,40 @@ export default function App() {
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-medium truncate">{u.name}</span>
-                    {u.id === userId && <span className="text-[8px] bg-emerald-500/10 text-emerald-500 px-1 rounded border border-emerald-500/20">YOU</span>}
+                    {u.id === userId && (
+                      <span className="text-[8px] bg-emerald-500/10 text-emerald-500 px-1 rounded border border-emerald-500/20">
+                        YOU
+                      </span>
+                    )}
                   </div>
-                  <span className="text-[9px] text-white/20 uppercase tracking-tighter">Active</span>
+                  <span className="text-[9px] text-white/20 uppercase tracking-tighter">
+                    Active
+                  </span>
                 </div>
               </div>
             ))}
           </div>
-          
+
           {/* User Info Card at bottom of sidebar */}
           <div className="p-4 mt-auto border-t border-white/10 bg-white/5">
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] uppercase tracking-widest font-bold text-white/30">Your Unique ID</span>
+              <span className="text-[10px] uppercase tracking-widest font-bold text-white/30">
+                Your Unique ID
+              </span>
               <div className="flex items-center justify-between bg-black/40 rounded-lg p-2 border border-white/5">
-                <code className="text-[10px] text-emerald-500/70 font-mono truncate mr-2">{userId}</code>
-                <button 
+                <code className="text-[10px] text-emerald-500/70 font-mono truncate mr-2">
+                  {userId}
+                </code>
+                <button
                   onClick={copyId}
                   className="p-1.5 hover:bg-white/10 rounded transition-colors"
                   title="Copy ID"
                 >
-                  {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3 text-white/40" />}
+                  {copied ? (
+                    <Check className="w-3 h-3 text-emerald-500" />
+                  ) : (
+                    <Copy className="w-3 h-3 text-white/40" />
+                  )}
                 </button>
               </div>
             </div>

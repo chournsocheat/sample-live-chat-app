@@ -47,16 +47,16 @@ async function startServer() {
       }
 
       const user = { id: userId, name: userName };
-      
+
       // Store user as online
       onlineUsers.set(socket.id, user);
 
       // Send initial state
-      socket.emit("init", { 
-        userId, 
+      socket.emit("init", {
+        userId,
         userName,
-        messages: messages.slice(-50), 
-        users: Array.from(onlineUsers.values()) 
+        messages: messages.slice(-50),
+        users: Array.from(onlineUsers.values()),
       });
 
       // Broadcast join status
@@ -66,7 +66,7 @@ async function startServer() {
         content: `${userName} joined the chat`,
         timestamp: Date.now(),
       };
-      
+
       messages.push(statusMsg);
       if (messages.length > 100) messages.shift();
 
@@ -102,7 +102,7 @@ async function startServer() {
         };
         messages.push(statusMsg);
         if (messages.length > 100) messages.shift();
-        
+
         io.emit("status_update", { user, status: "disconnected", message: statusMsg });
       }
       console.log("User disconnected:", socket.id);
