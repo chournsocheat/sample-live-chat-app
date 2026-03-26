@@ -1,7 +1,7 @@
 # Github Action: Build and Push Docker Image
 
 # Step 1: Create a Docker Hub account
-Go to [hub.docker.com](hub.docker.com) to create an account. Make sure to remember your docker hub's username and password :D.
+Go to [hub.docker.com](https://hub.docker.com) to create an account. Make sure to remember your docker hub's username and password :D.
 
 # 🔑 Step 2: Add Secrets to GitHub
 
